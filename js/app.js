@@ -1,13 +1,22 @@
-const keyboard = document.querySelector('#qwert');
+const keyboard = document.querySelector('#qwerty');
 const phrase = document.querySelector('#phrase');
 const letters = document.querySelectorAll('.letter');
 const misses = document.querySelector('.misses');
 const revised = document.querySelector('.btn__reset');
 const showLi = document.querySelector('.show');
-const start = document.querySelector('overlay');
+const startShow = document.querySelector('overlay');
 
 let hearts = document.querySelectorAll('img');
 let missed = 0;
+
+const phrases = [
+    'Family Guy',
+    'American Dad',
+    'Rick and Morty',
+    'Roger Smith',
+    'Peter Griffin'
+];
+
 
 //const checkLetter = button => {
    // let matched = null;
@@ -24,22 +33,10 @@ revised.addEventListener('click', () => {
     addPhraseToDisplay(phraseArray);
 });
 
-const phrases = [
-    'Family Guy',
-    'American Dad',
-    'Rick and Morty',
-    'Roger Smith',
-    'Peter Griffin'
-];
-
 function getRandomPhraseAsArray(arr) {
-    const random = arr[Math.floor(Math.random() * arr.lenght)];
-    return random.split('');
+    const randomPhrase = arr[Math.floor(Math.random() * arr.lenght)];
+    return randomPhrase.split('');
 }
-
-// call RandomPhrase function
-
-//const phraseArray = getRandomPhraseAsArray(phrases);
 
 
 function addPhraseToDisplay(arr) {
@@ -58,9 +55,8 @@ function addPhraseToDisplay(arr) {
 }
 
 // call phrase function
-
-//addPhraseToDisplay(phraseArray);
-
+const phraseArray = getRandomPhraseAsArray(phrases);
+addPhraseToDisplay(phraseArray);
 // checkLetter function
 
 const checkLetter = button => {
@@ -77,17 +73,35 @@ const checkLetter = button => {
     return matched;
 };
 
-keyboard.addEventListener('click', event => {
+keyboard.addEventListener('click', (event) => {
     if (event.target.tagName === 'BUTTON') {
         event.target.className = 'chosen';
         event.target.disabled = true;
 
         const letterFound = checkLetter(event.target.textContent.toLowerCase());
-        if(!letterFound){
+        if(!letterFound === null){
             missed++;
             const img = document.querySelectorAll('img');
             img[mised -1].src="images/lostHeart.png";
         }
     }
-    checkWin('');
+    checkWin();
 });
+
+const checkWin = () => {
+    let think = document.querySelectorAll('.show');
+    const letters = document.querySelectorAll('.letter')
+        if (think.length === letters.length) {
+            startShow.style.display.class  ('win');
+            startShow.textContent = 'My Man!'
+            btn__reset.textContent = 'cared for another round?';
+            return true;
+        }
+
+    if (missed >= 5) {
+        startShow.className = 'lose';
+        startShow.textContent = 'Bummer, guess you should have choose diffrent letters.';
+        return true;
+    }
+    return false;
+}
