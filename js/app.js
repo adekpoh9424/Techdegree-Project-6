@@ -1,10 +1,11 @@
 const keyboard = document.querySelector('#qwerty');
 const phrase = document.querySelector('#phrase');
 const letters = document.querySelectorAll('.letter');
-const misses = document.querySelector('.misses');
+const misses = document.querySelector('.misses'); 
+const title = document.querySelector('.title');
 const revised = document.querySelector('.btn__reset');
 const showLi = document.querySelector('.show');
-const startShow = document.querySelector('overlay');
+const startShow = document.querySelector('#overlay');
 
 let hearts = document.querySelectorAll('img');
 let missed = 0;
@@ -29,28 +30,28 @@ revised.addEventListener('click', () => {
 
 revised.addEventListener('click', () => {
     revised.style.display = 'none';
-    const phraseArray = getRandomPhraseAsArray(phrase);
+    const phraseArray = getRandomPhraseAsArray(phrases);
     addPhraseToDisplay(phraseArray);
 });
 
-function getRandomPhraseAsArray(arr) {
-    const randomPhrase = arr[Math.floor(Math.random() * arr.lenght)];
+const getRandomPhraseAsArray = arr => {
+    const randomPhrase = arr[Math.floor(Math.random() * arr.length)];
     return randomPhrase.split('');
 }
 
-
 function addPhraseToDisplay(arr) {
-    for(let i = 0; i < arr.lenght; i++) {
+    const ul = document.querySelector('#phrase ul');
+    for(let i = 0; i < arr.length; i++) {
         let listItem = document.createElement('li');
         listItem.textContent = arr [i];
-        phraseList.appendChild(listItem);
+        phrase.appendChild(listItem);
 
-        if (listItem.textContent !== '') {
+        if (listItem.textContent !== ' ') {
             listItem.className = 'letter';
         } else {
             listItem.className = 'space';
         }
-        ul.appendChild(li);
+        
     }
 }
 
@@ -75,32 +76,35 @@ const checkLetter = button => {
 
 keyboard.addEventListener('click', (event) => {
     if (event.target.tagName === 'BUTTON') {
-        event.target.className = 'chosen';
         event.target.disabled = true;
+        event.target.classList.add('chosen');
 
-        const letterFound = checkLetter(event.target.textContent.toLowerCase());
-        if(!letterFound === null){
-            missed++;
-            const img = document.querySelectorAll('img');
-            img[mised -1].src="images/lostHeart.png";
+        let letterFound = checkLetter(event.target.textContent);
+        if (letterFound === null) {
+            hearts[missed].src = 'images/lostHeart.png';
+            missed += 1;
         }
     }
     checkWin();
 });
 
+
 const checkWin = () => {
-    let think = document.querySelectorAll('.show');
-    const letters = document.querySelectorAll('.letter')
-        if (think.length === letters.length) {
-            startShow.style.display.class  ('win');
-            startShow.textContent = 'My Man!'
-            btn__reset.textContent = 'cared for another round?';
+    let showLi= document.querySelectorAll('.show');
+    const letters = document.querySelectorAll('.letter');
+        if (letters.length === showLi.length) {
+            startShow.classList.add  ('win');
+            title.textContent = 'My Man!';
+            revised.textContent = 'cared for another round?';
             return true;
+            revised.addEventListener ('click', () => {
+                window.location.reload(true);
+            });
         }
 
     if (missed >= 5) {
-        startShow.className = 'lose';
-        startShow.textContent = 'Bummer, guess you should have choose diffrent letters.';
+        startShow.classList.add ('lose');
+        startShow.textContent = 'Bummer, guess you should have choose different letters.';
         return true;
     }
     return false;
