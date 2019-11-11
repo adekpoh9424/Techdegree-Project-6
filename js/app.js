@@ -24,12 +24,12 @@ const phrases = [
 
 //}
 
-revised.addEventListener('click', () => {
-    overlay.style.display = 'none';
-});
+//revised.addEventListener('click', () => {
+  //  startShow.style.display = 'none';
+//});
 
 revised.addEventListener('click', () => {
-    revised.style.display = 'none';
+    startShow.style.display = 'none';
     const phraseArray = getRandomPhraseAsArray(phrases);
     addPhraseToDisplay(phraseArray);
 });
@@ -56,8 +56,8 @@ function addPhraseToDisplay(arr) {
 }
 
 // call phrase function
-const phraseArray = getRandomPhraseAsArray(phrases);
-addPhraseToDisplay(phraseArray);
+//const phraseArray = getRandomPhraseAsArray(phrases);
+//addPhraseToDisplay(phraseArray);
 // checkLetter function
 
 const checkLetter = button => {
@@ -81,8 +81,10 @@ keyboard.addEventListener('click', (event) => {
 
         let letterFound = checkLetter(event.target.textContent);
         if (letterFound === null) {
-            hearts[missed].src = 'images/lostHeart.png';
-            missed += 1;
+            missed++;
+            let hearts = document.querySelectorAll('img');
+            hearts[missed - 1].src = 'images/lostHeart.png';
+            
         }
     }
     checkWin();
@@ -93,19 +95,36 @@ const checkWin = () => {
     let showLi= document.querySelectorAll('.show');
     const letters = document.querySelectorAll('.letter');
         if (letters.length === showLi.length) {
+            console.log (startShow);
+            startShow.style.display= 'flex';
             startShow.classList.add  ('win');
             title.textContent = 'My Man!';
-            revised.textContent = 'cared for another round?';
-            return true;
-            revised.addEventListener ('click', () => {
-                window.location.reload(true);
+            
+             let resetBtn = document.createElement('a');
+             resetBtn.className = 'btn__reset';
+             startShow.appendChild(resetBtn);
+             resetBtn.textContent = 'cared for another round?';
+            revised.textContent = 'well done, you won';
+             resetBtn.addEventListener ('click', () => {
+                 window.location.reload(true);
             });
         }
 
-    if (missed >= 5) {
-        startShow.classList.add ('lose');
-        startShow.textContent = 'Bummer, guess you should have choose different letters.';
-        return true;
+     if (missed >= 5) {
+         startShow.style.display= 'flex';
+        startShow.classList.add ('lose'); 
+        title.textContent = 'Game Lost';
+        let resetBtn = document.createElement('a');
+             resetBtn.className = 'btn__reset';
+             startShow.appendChild(resetBtn);
+             //resetBtn.textContent = 'cared for another round?';
+             revised.textContent = 'Bummer, guess you should have chose different letters.';
+
+             resetBtn.textContent = 'cared for another round?';
+             resetBtn.addEventListener ('click', () => {
+                 window.location.reload(true);
+            });
+        //return true;
     }
-    return false;
-}
+    //return false;
+};
