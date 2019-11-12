@@ -103,8 +103,9 @@ const checkWin = () => {
              let resetBtn = document.createElement('a');
              resetBtn.className = 'btn__reset';
              startShow.appendChild(resetBtn);
+             document.querySelector('.btn__reset').style.visibility = 'hidden';
              resetBtn.textContent = 'cared for another round?';
-            revised.textContent = 'well done, you won';
+            title.textContent = 'well done, you won';
              resetBtn.addEventListener ('click', () => {
                  window.location.reload(true);
             });
@@ -118,8 +119,8 @@ const checkWin = () => {
              resetBtn.className = 'btn__reset';
              startShow.appendChild(resetBtn);
              //resetBtn.textContent = 'cared for another round?';
-             revised.textContent = 'Bummer, guess you should have chose different letters.';
-
+             title.textContent = 'Bummer, guess you should have chose different letters.';
+             document.querySelector('.btn__reset').style.visibility = 'hidden';
              resetBtn.textContent = 'cared for another round?';
              resetBtn.addEventListener ('click', () => {
                  window.location.reload(true);
